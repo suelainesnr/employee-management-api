@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  cadastro-funcionario:
+    build: .
+    container_name: cadastrofuncionario
+    ports:
+      - "8084:8082"
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"   # Porta para conexão da aplicação
+      - "15672:15672" # Porta do painel web (admin)
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  rabbitmq_data:
